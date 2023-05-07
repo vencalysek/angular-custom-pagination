@@ -1,78 +1,53 @@
-<nav>
-  <ul class="app-pagination">
-    <!-- first button -->
-    <li
-      *ngIf="firstLastButtons"
-      class="app-pagination__page-item"
-      [class.app-pagination__page-item--disabled]="currentPage === 1"
-    >
-      <button
-        class="app-pagination__page-item__page-link"
-        (click)="selectPageNumber(1)"
-      >
-        ««
-      </button>
-    </li>
+<nav class="app-pagination">
+  <!-- first button -->
+  <button
+    *ngIf="firstLastButtons"
+    class="app-pagination__page-item"
+    [disabled]="currentPage === 1"
+    (click)="selectPageNumber(1)"
+  >
+    ««
+  </button>
 
-    <!-- previous button -->
-    <li
-      *ngIf="nextPreviousButtons"
-      class="app-pagination__page-item"
-      [class.app-pagination__page-item--disabled]="currentPage === 1"
-    >
-      <button
-        [disabled]="currentPage === 1"
-        class="app-pagination__page-item__page-link"
-        (click)="previous()"
-      >
-        «
-      </button>
-    </li>
+  <!-- previous button -->
+  <button
+    *ngIf="nextPreviousButtons"
+    class="app-pagination__page-item"
+    [disabled]="currentPage === 1"
+    (click)="previous()"
+  >
+    «
+  </button>
 
-    <!-- page numbers -->
-    <div *ngFor="let p of totalPages; index as i">
-      <li
-        *ngIf="i + 1 >= currentPage - maxSize && i + 1 <= currentPage + maxSize"
-        class="app-pagination__page-item"
-        [class.app-pagination__page-item--active]="currentPage === i + 1"
-      >
-        <button
-          class="app-pagination__page-item__page-link"
-          [disabled]="currentPage === i + 1"
-          (click)="selectPageNumber(i + 1)"
-        >
-          {{ i + 1 }}
-        </button>
-      </li>
-    </div>
-
-    <!-- next button -->
-    <li
-      *ngIf="nextPreviousButtons"
+  <!-- page numbers -->
+  <div *ngFor="let p of totalPages; index as i">
+    <button
+      *ngIf="i + 1 >= currentPage - maxSize && i + 1 <= currentPage + maxSize"
       class="app-pagination__page-item"
-      [class.app-pagination__page-item--disabled]="
-        currentPage === totalPages.length
-      "
+      [class.app-pagination__page-item--active]="currentPage === i + 1"
+      (click)="selectPageNumber(i + 1)"
     >
-      <button class="app-pagination__page-item__page-link" (click)="next()">
-        »
-      </button>
-    </li>
+      {{ i + 1 }}
+    </button>
+  </div>
 
-    <!-- last button -->
-    <li
-      *ngIf="firstLastButtons"
-      class="app-pagination__page-item"
-      [class.app-pagination__page-item--disabled]="
-        currentPage === totalPages.length
-      "
-    >
-      <button
-        class="app-pagination__page-item__page-link"
-        (click)="selectPageNumber(totalPages.length)"
-      >
-        »»
-      </button>
-    </li>
-  </ul>
+  <!-- next button -->
+  <button
+    *ngIf="nextPreviousButtons"
+    class="app-pagination__page-item"
+    [disabled]="currentPage === totalPages.length"
+    (click)="next()"
+  >
+    »
+  </button>
+
+  <!-- last button -->
+  <button
+    *ngIf="firstLastButtons"
+    class="app-pagination__page-item"
+    [disabled]="currentPage === totalPages.length"
+    (click)="selectPageNumber(totalPages.length)"
+  >
+    »»
+  </button>
 </nav>
