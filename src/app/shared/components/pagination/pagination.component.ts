@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DEFAULT_PAGINATION_CONFIG } from './pagination.constants';
 
 @Component({
@@ -18,6 +18,8 @@ export class PaginationComponent implements OnInit {
   /** Display the Next/Previous buttons */
   @Input() nextPreviousButtons = true;
 
+  @Output() getCurrentPage = new EventEmitter<number>();
+
   defaultPaginationConfig = DEFAULT_PAGINATION_CONFIG;
   totalPages: any[] = [];
 
@@ -25,23 +27,22 @@ export class PaginationComponent implements OnInit {
     this.totalPages = new Array(
       Math.ceil(this.collectionSize / this.defaultPaginationConfig.pageSize)
     );
-    console.log('this.totalPages', this.totalPages);
   }
 
-  selectPageNumber(pageNumber: number) {
+  onSelectPageNumber(pageNumber: number) {
     this.currentPage = pageNumber;
-    console.log('this.currentPage', this.currentPage);
+    this.getCurrentPage.emit(this.currentPage);
   }
 
   /** Set next page number */
-  next() {
+  onNextClick() {
     const nextPage = this.currentPage + 1;
-    nextPage <= this.totalPages.length && this.selectPageNumber(nextPage);
+    nextPage <= this.totalPages.length && this.onSelectPageNumber(nextPage);
   }
 
   /** Set previous page number */
-  previous() {
+  onPreviousClick() {
     const previousPage = this.currentPage - 1;
-    previousPage >= 1 && this.selectPageNumber(previousPage);
+    previousPage >= 1 && this.onSelectPageNumber(previousPage);
   }
 }
