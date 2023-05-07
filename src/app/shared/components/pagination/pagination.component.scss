@@ -5,7 +5,7 @@
   &__page-item {
     cursor: pointer;
     padding: 3px 7px;
-    margin: 5px;
+    margin: 2px;
     position: relative;
     display: block;
     color: #0d6efd;
@@ -19,6 +19,11 @@
       color: #fff;
       background-color: #0d6efd;
       border-color: #0d6efd;
+    }
+
+    &--disabled {
+      color: gray;
+      cursor: default;
     }
   }
 }

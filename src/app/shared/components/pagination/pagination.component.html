@@ -1,28 +1,47 @@
 <nav class="app-pagination">
   <!-- first button -->
-  <button
+  <!-- <button
     *ngIf="firstLastButtons"
     class="app-pagination__page-item"
     [disabled]="currentPage === 1"
     (click)="onSelectPageNumber(1)"
   >
     ««
-  </button>
+  </button> -->
 
   <!-- previous button -->
   <button
     *ngIf="nextPreviousButtons"
     class="app-pagination__page-item"
+    [class.app-pagination__page-item--disabled]="currentPage === 1"
     [disabled]="currentPage === 1"
     (click)="onPreviousClick()"
   >
     «
   </button>
 
+  <!-- first button -->
+  <button
+    class="app-pagination__page-item"
+    [class.app-pagination__page-item--active]="currentPage === 1"
+    (click)="onSelectPageNumber(1)"
+  >
+    1
+  </button>
+
+  <div *ngIf="currentPage - 1 > maxSize" class="app-pagination__page-item">
+    ...
+  </div>
+
   <!-- page numbers -->
   <div *ngFor="let p of totalPages; index as i">
     <button
-      *ngIf="i + 1 >= currentPage - maxSize && i + 1 <= currentPage + maxSize"
+      *ngIf="
+        i + 1 >= currentPage - maxSize &&
+        i + 1 <= currentPage + maxSize &&
+        i + 1 !== 1 &&
+        i + 1 !== totalPages.length
+      "
       class="app-pagination__page-item"
       [class.app-pagination__page-item--active]="currentPage === i + 1"
       (click)="onSelectPageNumber(i + 1)"
@@ -31,10 +50,31 @@
     </button>
   </div>
 
+  <div
+    *ngIf="totalPages.length - currentPage > maxSize"
+    class="app-pagination__page-item"
+  >
+    ...
+  </div>
+
+  <!-- last button -->
+  <button
+    class="app-pagination__page-item"
+    [class.app-pagination__page-item--active]="
+      currentPage === totalPages.length
+    "
+    (click)="onSelectPageNumber(totalPages.length)"
+  >
+    {{ totalPages.length }}
+  </button>
+
   <!-- next button -->
   <button
     *ngIf="nextPreviousButtons"
     class="app-pagination__page-item"
+    [class.app-pagination__page-item--disabled]="
+      currentPage === totalPages.length
+    "
     [disabled]="currentPage === totalPages.length"
     (click)="onNextClick()"
   >
@@ -42,12 +82,12 @@
   </button>
 
   <!-- last button -->
-  <button
+  <!-- <button
     *ngIf="firstLastButtons"
     class="app-pagination__page-item"
     [disabled]="currentPage === totalPages.length"
     (click)="onSelectPageNumber(totalPages.length)"
   >
     »»
-  </button>
+  </button> -->
 </nav>
